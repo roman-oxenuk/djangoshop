@@ -1,0 +1,5 @@
+*.pyc
+*.pyo
+.vagrant
+db.sqlite3
+project/media/

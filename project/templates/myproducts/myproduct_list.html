@@ -1,0 +1,51 @@
+{% extends "shop/base.html" %}
+{% load url from future %}
+
+{% block body %}
+  <h1>Product list:</h1>
+  <hr />
+  {% for object in object_list %}
+  <a href="{% url 'product_detail' object.slug %}">{{object.get_name}}</a><br />
+
+
+  <p>Бренд: <i>{{ object.brand.name }}</i></p>
+  <p>Скидки от бренда:
+    <ol>
+    {% for discount in object.brand.brand_discounts %}
+      <li>{{ discount }}</li>
+    {% endfor %}
+    </ol>
+  </p>
+  <br />
+
+  <p>Категории:
+    <ul>
+      {% for category in object.category.all %}
+        <li><i>{{ category.name }}</i></li>
+        <ol>
+          {% for category_discount in category.category_discounts %}
+            <li>{{ category_discount }}</li>
+          {% endfor %}
+        </ol>
+      {% endfor %}
+    </ul>
+  </p>
+  <br />
+
+  <p>
+    Единичные скидки на товар:
+    <ol>
+    {% for discount in object.single_discounts %}
+      <li>{{ discount }}</li>
+    {% endfor %}
+    </ol>
+  </p>
+  <br />
+
+  <p><b>Максимальная скидка: {{ object.get_max_discount }}</b></p>
+  <p>Цена: {{object.unit_price}}</p>
+  <p>Цена с учётом скидки: {{ object.discounted_price }} </p>
+  <hr/>
+
+  {% endfor %}
+{% endblock %}
